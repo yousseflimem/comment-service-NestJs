@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7.0
+    container_name: comment-service-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: hand4pal_comments_db
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - comment-service-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Comment Service Application (optional - can run locally instead)
+  comment-service:
+    build: .
+    container_name: comment-service-app
+    ports:
+      - "8084:8084"
+    environment:
+      PORT: 8084
+      MONGODB_URI: mongodb://mongodb:27017/hand4pal_comments_db
+      JWT_SECRET: VHJlcyBTZWNyZXQgS2V5IFBvdXIgSGFuZDRQYWwgUHJvamVjdCAyMDI1ICE=
+      AUTH_SERVICE_URL: http://host.docker.internal:8081
+      NODE_ENV: production
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - comment-service-network
+    # Uncomment if you want to run locally instead of in container
+    # profiles:
+    #   - production
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  comment-service-network:
+    driver: bridge

@@ -1,98 +1,349 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Comment Service - NestJS + MongoDB
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A complete microservice for managing comments, rebuilt from Spring Boot to NestJS with MongoDB.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+- **CRUD Operations** for comments
+- **JWT Authentication** with validation
+- **MongoDB** database integration
+- **Integration with Auth Service** via HTTP client
+- **Campaign-based comment filtering**
+- **Automatic timestamp management** (publicationDate, lastModifiedDate)
+- **Input validation** using class-validator
+- **RESTful API** endpoints
+- **Postman collection** for API testing
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 📋 Prerequisites
 
-## Project setup
+- Node.js (v18 or higher)
+- MongoDB (running on localhost:27017 or remote)
+- Auth Service (running on port 8081 for JWT validation)
 
+## 🛠️ Installation
+
+1. **Install dependencies:**
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
+2. **Configure environment variables:**
+   
+Create a `.env` file in the root directory (or copy `.env.example`):
 
-```bash
-# development
-$ npm run start
+```env
+# Application
+PORT=8084
+NODE_ENV=development
 
-# watch mode
-$ npm run start:dev
+# MongoDB
+MONGODB_URI=mongodb://localhost:27017/hand4pal_comments_db
 
-# production mode
-$ npm run start:prod
+# JWT Configuration
+JWT_SECRET=VHJlcyBTZWNyZXQgS2V5IFBvdXIgSGFuZDRQYWwgUHJvamVjdCAyMDI1ICE=
+
+# Auth Service
+AUTH_SERVICE_URL=http://localhost:8081
 ```
 
-## Run tests
-
+3. **Start MongoDB:**
 ```bash
-# unit tests
-$ npm run test
+# If using local MongoDB
+mongod
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Or use Docker
+docker run -d -p 27017:27017 --name mongodb mongo:latest
 ```
 
-## Deployment
+## 🏃 Running the Application
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Development mode
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Production mode
+```bash
+npm run build
+npm run start:prod
+```
 
-## Resources
+### Debug mode
+```bash
+npm run start:debug
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+The service will be available at: `http://localhost:8084`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 📁 Project Structure
 
-## Support
+```
+src/
+├── auth/
+│   ├── dto/
+│   │   └── user.dto.ts              # User data transfer object
+│   ├── guards/
+│   │   └── jwt-auth.guard.ts        # JWT authentication guard
+│   ├── strategies/
+│   │   └── jwt.strategy.ts          # Passport JWT strategy
+│   ├── auth.module.ts               # Auth module
+│   └── auth.service.ts              # Auth service (communicates with auth-service)
+├── comment/
+│   ├── dto/
+│   │   ├── comment-response.dto.ts  # Response DTO
+│   │   ├── create-comment.dto.ts    # Create comment DTO with validation
+│   │   └── update-comment.dto.ts    # Update comment DTO
+│   ├── schemas/
+│   │   └── comment.schema.ts        # MongoDB schema
+│   ├── comment.controller.ts        # REST API controller
+│   ├── comment.module.ts            # Comment module
+│   └── comment.service.ts           # Business logic
+├── app.module.ts                     # Root module
+└── main.ts                          # Application entry point
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🔌 API Endpoints
 
-## Stay in touch
+### Authentication
+All endpoints require JWT authentication via the `Authorization` header:
+```
+Authorization: Bearer <your_jwt_token>
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Endpoints
 
-## License
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/comments` | Create a new comment |
+| GET | `/comments` | Get all comments |
+| GET | `/comments/campaign/:campaignId` | Get comments by campaign |
+| PUT | `/comments/:id` | Update a comment |
+| DELETE | `/comments/:id` | Delete a comment |
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Request/Response Examples
+
+#### Create Comment
+**Request:**
+```json
+POST /comments
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "content": "This is a great campaign!",
+  "campaignId": 1
+}
+```
+
+**Response:**
+```json
+{
+  "commentId": "507f1f77bcf86cd799439011",
+  "content": "This is a great campaign!",
+  "publicationDate": "2025-01-15T10:30:00.000Z",
+  "lastModifiedDate": null,
+  "campaignId": 1,
+  "citizenId": 123
+}
+```
+
+#### Get All Comments
+**Request:**
+```json
+GET /comments
+Authorization: Bearer <token>
+```
+
+**Response:**
+```json
+[
+  {
+    "commentId": "507f1f77bcf86cd799439011",
+    "content": "This is a great campaign!",
+    "publicationDate": "2025-01-15T10:30:00.000Z",
+    "lastModifiedDate": null,
+    "campaignId": 1,
+    "citizenId": 123
+  }
+]
+```
+
+#### Update Comment
+**Request:**
+```json
+PUT /comments/507f1f77bcf86cd799439011
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "content": "Updated comment text"
+}
+```
+
+**Response:**
+```json
+{
+  "commentId": "507f1f77bcf86cd799439011",
+  "content": "Updated comment text",
+  "publicationDate": "2025-01-15T10:30:00.000Z",
+  "lastModifiedDate": "2025-01-15T11:45:00.000Z",
+  "campaignId": 1,
+  "citizenId": 123
+}
+```
+
+## 🧪 Testing with Postman
+
+Import the Postman collection: `Comment-Service-API.postman_collection.json`
+
+**Setup:**
+1. Set the `jwt_token` variable with a valid JWT from your auth service
+2. The collection includes tests for:
+   - Creating comments
+   - Retrieving all comments
+   - Filtering by campaign
+   - Updating comments
+   - Deleting comments
+   - Error cases (unauthorized, invalid data, not found)
+
+## 🔑 JWT Token Format
+
+The JWT token must contain:
+```json
+{
+  "sub": 123,          // User ID (becomes citizenId)
+  "email": "user@example.com",
+  "role": "CITIZEN",
+  "iat": 1234567890,
+  "exp": 1234567890
+}
+```
+
+## 🗄️ Database Schema
+
+### Comment Collection
+```javascript
+{
+  _id: ObjectId,
+  content: String (required),
+  publicationDate: Date (auto-generated),
+  lastModifiedDate: Date (nullable),
+  campaignId: Number (required),
+  citizenId: Number (required, from JWT)
+}
+```
+
+## 🔄 Migration from Spring Boot
+
+### Key Differences
+
+| Spring Boot | NestJS |
+|-------------|--------|
+| JPA/Hibernate | Mongoose ODM |
+| MySQL | MongoDB |
+| @Entity | @Schema |
+| @Repository | Model injection |
+| Feign Client | Axios HTTP client |
+| application.properties | .env file |
+| @Autowired | Constructor injection |
+| @RestController | @Controller |
+| ResponseEntity | Direct return values |
+
+### What's the Same
+
+- ✅ Same API endpoints and behavior
+- ✅ Same JWT authentication flow
+- ✅ Same business logic
+- ✅ Same DTOs structure
+- ✅ Same validation rules
+- ✅ Same integration with auth-service
+
+## 🛡️ Security
+
+- JWT tokens are validated on every request
+- Secrets are stored in environment variables
+- CORS is enabled (configure in `main.ts` as needed)
+- Input validation prevents injection attacks
+- citizenId is extracted from authenticated JWT (not from request body)
+
+## 📝 Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| PORT | Server port | 8084 |
+| NODE_ENV | Environment | development |
+| MONGODB_URI | MongoDB connection string | mongodb://localhost:27017/hand4pal_comments_db |
+| JWT_SECRET | JWT secret key (base64) | (see .env) |
+| AUTH_SERVICE_URL | Auth service endpoint | http://localhost:8081 |
+
+## 🐛 Troubleshooting
+
+### MongoDB Connection Error
+```bash
+# Check if MongoDB is running
+mongosh
+
+# Or restart MongoDB service
+sudo systemctl restart mongod
+```
+
+### JWT Validation Failed
+- Ensure AUTH_SERVICE_URL is correct
+- Verify the JWT_SECRET matches your auth service
+- Check that the token is not expired
+
+### Port Already in Use
+```bash
+# Change PORT in .env file or kill the process
+lsof -ti:8084 | xargs kill -9
+```
+
+## 📦 Dependencies
+
+### Core
+- `@nestjs/common` - NestJS core
+- `@nestjs/core` - NestJS core
+- `@nestjs/platform-express` - Express platform
+- `@nestjs/mongoose` - MongoDB integration
+- `mongoose` - MongoDB ODM
+
+### Authentication
+- `@nestjs/jwt` - JWT utilities
+- `@nestjs/passport` - Passport integration
+- `passport-jwt` - Passport JWT strategy
+
+### Validation
+- `class-validator` - DTO validation
+- `class-transformer` - Object transformation
+
+### HTTP Client
+- `axios` - HTTP requests to auth service
+
+## 🚀 Deployment
+
+### Docker Deployment (Optional)
+Create a `Dockerfile`:
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+RUN npm run build
+EXPOSE 8084
+CMD ["npm", "run", "start:prod"]
+```
+
+Build and run:
+```bash
+docker build -t comment-service .
+docker run -p 8084:8084 --env-file .env comment-service
+```
+
+## 📄 License
+
+This project is part of the Hand4Pal platform.
+
+## 👥 Support
+
+For issues or questions, please contact the development team.
